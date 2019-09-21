@@ -5,6 +5,7 @@ const SPOTIFY_CLIENT_SECRET = functions.config().spotify.client_secret;
 const Firestore = require('@google-cloud/firestore');
 var admin = require("firebase-admin");
 var serviceAccount = require("/serviceAccountKey.json");
+var fs = require("fs");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -35,6 +36,10 @@ exports.detectArtist = functions.https.onRequest((request, response) => {
       spotifyApi
         .searchArtists(artistName)
         .then(data => { 
+          console.log("\n *START* \n");
+          var content = fs.readFileSync("content.txt");
+          console.log("Output Content : \n"+ content);
+          console.log("\n *EXIT* \n");
           //save to database here
           //respond with info for client
 
