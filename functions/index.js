@@ -34,11 +34,11 @@ exports.detectArtist = functions.https.onRequest((request, response) => {
       );
     }
   );
-  function writeArtistData(userId, name, email, imageUrl) {
-    firebase.database().ref('users/' + userId).set({
+  function writeArtistData(URI, name, popularity, imageUrl) {
+    firebase.database().ref('users/' + URI).set({
       username: name,
-      email: email,
-      profile_picture : imageUrl
+      popularity: popularity,
+      picture : imageUrl
     });
   }
 });
