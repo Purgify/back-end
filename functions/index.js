@@ -13,7 +13,7 @@ admin.initializeApp({
 
 const db = new Firestore({
   projectId: 'purgify-3a0bc',
-  keyFilename: '/path/to/keyfile.json',
+  keyFilename: '/serviceAccount.json',
 });
 
 const spotifyApi = new SpotifyWebApi({
@@ -34,9 +34,11 @@ exports.detectArtist = functions.https.onRequest((request, response) => {
       spotifyApi.setAccessToken(data.body["access_token"]);
       spotifyApi
         .searchArtists(artistName)
-        .then(data => {
+        .then(data => { 
           //save to database here
           //respond with info for client
+
+          db.writeArtistData(URI, name, popularity, imageURL);
         })
         .catch(err => console.error(err));
     },
