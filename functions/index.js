@@ -9,6 +9,8 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 
 exports.detectArtist = functions.https.onRequest((request, response) => {
   // get query param from request for the artist name to search
+  const artistName = request.query.name;
   // call spotify API to get artist URI
   // send success or error response to client
+  response.send(`You want to search for ${artistName}`);
 });
