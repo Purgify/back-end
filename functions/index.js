@@ -15,7 +15,9 @@ exports.detectArtist = functions.https.onRequest((request, response) => {
   // get query param from request for the artist name to search
   const artistName = request.query.name;
   // call spotify API to get artist URI
+fetch('${BASE_URL}v1/search?q=name:${artistName}&type=artist')
+.then(artistQ => artistQ.json())
+.then(artistData => response.send(artistData));
 
-  // send success or error response to client
-  response.send(`You want to search for ${artistName}`);
+  //response.send(`You want to search for ${artistName}`);
 });
