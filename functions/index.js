@@ -22,8 +22,10 @@ exports.detectArtist = functions.https.onRequest((request, response) => {
       spotifyApi
         .searchArtists(artistName)
         .then(data => {
-          //save to database here
-          //respond with info for client
+          //save in the database
+
+          //send data to front end
+          response.send({ data: data.body.artists.items });
         })
         .catch(err => console.error(err));
     },
