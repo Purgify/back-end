@@ -2,6 +2,19 @@ const functions = require("firebase-functions");
 const SpotifyWebApi = require("spotify-web-api-node");
 const SPOTIFY_CLIENT_ID = functions.config().spotify.client_id;
 const SPOTIFY_CLIENT_SECRET = functions.config().spotify.client_secret;
+const Firestore = require('@google-cloud/firestore');
+var admin = require("firebase-admin");
+var serviceAccount = require("/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://purgify-3a0bc.firebaseio.com"
+});
+
+const db = new Firestore({
+  projectId: 'purgify-3a0bc',
+  keyFilename: '/path/to/keyfile.json',
+});
 
 const spotifyApi = new SpotifyWebApi({
   clientId: SPOTIFY_CLIENT_ID,
@@ -22,10 +35,8 @@ exports.detectArtist = functions.https.onRequest((request, response) => {
       spotifyApi
         .searchArtists(artistName)
         .then(data => {
-          //save in the database
-
-          //send data to front end
-          response.send({ data: data.body.artists.items });
+          //save to database here
+          //respond with info for client
         })
         .catch(err => console.error(err));
     },
